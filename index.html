@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kavishka Madushan - Visual Home</title>
+    <style>
+        /* CSS Variables for easier theming and consistency */
+        :root {
+            --primary-color: #a020f0; /* Purple */
+            --primary-darker-color: #6c1a93; /* Darker purple for hover effects */
+            --primary-light-color: #d8b4fe; /* Light purple for h1 text */
+            --bg-color: #1e1e2e; /* Dark purple background for the body */
+            --text-color: #f0f0f0; /* Main text color */
+            --text-secondary-color: #ccc; /* Secondary text color for paragraphs */
+            --gradient-start: #8a2be2; /* BlueViolet for shape gradient */
+            --gradient-end: #9400d3; /* DarkViolet for shape gradient */
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevents scrollbars due to animations */
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            /* Improves rendering performance for animations */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .abstract-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Allows interaction with content below */
+            z-index: -1; /* Places the background behind other content */
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%; /* Makes the divs circular */
+            opacity: 0.5;
+            will-change: transform; /* Hint to the browser that transform will change, for performance */
+            /* The 'float' animation is now handled by JavaScript for smoother integration 
+               with the mouse parallax effect.
+               animation: float 6s infinite alternate; 
+            */
+        }
+
+        /* Initial positions and sizes for the shapes */
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 15%;
+            /* animation-delay: 0s; /* JS will handle timing differences */
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            right: 20%;
+            /* animation-delay: 1s; */
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 15%;
+            left: 30%;
+            /* animation-delay: 2s; */
+        }
+
+        .shape:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            bottom: 40%;
+            right: 10%;
+            /* animation-delay: 3s; */
+        }
+
+        /* The @keyframes float is no longer needed as JavaScript handles the floating.
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(15px);
+            }
+        }
+        */
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centers the content */
+            text-align: center;
+            padding: 20px;
+            width: 90%; /* Responsive width for smaller screens */
+            max-width: 600px; /* Maximum width for larger screens */
+            box-sizing: border-box; /* Ensures padding doesn't add to the width */
+        }
+
+        .profile-image {
+            width: 120px; /* Default size for smaller screens */
+            height: 120px;
+            border-radius: 50%; /* Circular image */
+            object-fit: cover; /* Ensures the image covers the area without distortion */
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            border: 3px solid var(--primary-color);
+        }
+
+        h1 {
+            font-size: 2.2em; /* Responsive font size */
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--primary-light-color);
+        }
+
+        p {
+            font-size: 1em; /* Responsive font size */
+            color: var(--text-secondary-color);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .links-section {
+            display: flex;
+            flex-direction: column; /* Stack links vertically on mobile */
+            align-items: center; /* Center links when stacked */
+        }
+
+        .links-section a {
+            display: inline-block;
+            color: var(--text-color);
+            font-size: 1em; /* Responsive font size */
+            margin: 8px 0; /* Margin for vertically stacked links */
+            text-decoration: none;
+            padding: 10px 20px; /* Padding for buttons */
+            border-radius: 25px; /* Rounded buttons */
+            background-color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: 70%; /* Make buttons take more width on mobile */
+            max-width: 220px; /* Max width for buttons */
+            box-sizing: border-box;
+        }
+
+        .links-section a:hover,
+        .links-section a:focus { /* Added focus state for accessibility */
+            background-color: var(--primary-darker-color);
+            color: #fff;
+            transform: translateY(-2px); /* Slight lift effect on hover/focus */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            outline: none; /* Remove default focus outline if custom styling is sufficient */
+        }
+
+        /* Media Query for tablet screens and larger */
+        @media (min-width: 768px) {
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            h1 {
+                font-size: 3em;
+            }
+
+            p {
+                font-size: 1.2em;
+            }
+
+            .links-section {
+                flex-direction: row; /* Horizontal layout for links */
+                justify-content: center; /* Center links horizontally */
+            }
+
+            .links-section a {
+                margin: 0 10px; /* Horizontal margin for links */
+                padding: 12px 25px;
+                font-size: 1.1em;
+                width: auto; /* Let content define button width */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="abstract-background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="content">
+        <img src="D:/photos/SAVE_20230703_232609.jpg" alt="Kavishka Madushan" class="profile-image" onerror="this.src='https://placehold.co/150x150/1e1e2e/FFFFFF?text=Error'; this.onerror=null;">
+        <h1>Kavishka Madushan</h1>
+        <p>Innovating Digital Experiences & Exploring Creative Frontiers</p>
+        <div class="links-section">
+            <a href="#">Portfolio</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Projects</a>
+            <a href="#">MyBooks</a>
+        </div>
+    </div>
+
+    <script>
+        // Select all elements with the class 'shape'
+        const shapes = document.querySelectorAll('.shape');
+        
+        // Initialize mouse coordinates to the center of the window
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+
+        // Define animation properties for each shape.
+        // These can be tweaked to change the animation behavior.
+        const shapeAnimationConfig = [
+            // Config for shape 1
+            { delay: 0, amplitude: 12, frequency: 0.45, parallaxSpeed: 0.05, parallaxDepth: 0.02 },
+            // Config for shape 2
+            { delay: 0.5, amplitude: 15, frequency: 0.35, parallaxSpeed: 0.08, parallaxDepth: 0.03 },
+            // Config for shape 3
+            { delay: 1.0, amplitude: 8, frequency: 0.55, parallaxSpeed: 0.03, parallaxDepth: 0.015 },
+            // Config for shape 4
+            { delay: 1.5, amplitude: 10, frequency: 0.40, parallaxSpeed: 0.06, parallaxDepth: 0.025 }
+        ];
+
+
+        // Create an array of objects, each representing a shape and its animation data
+        const shapeData = Array.from(shapes).map((shapeElement, index) => {
+            const config = shapeAnimationConfig[index % shapeAnimationConfig.length]; // Cycle through configs if more shapes than configs
+            return {
+                element: shapeElement,
+                // Current X and Y position for smooth animation (lerping)
+                currentX: 0,
+                currentY: 0,
+                // Target X and Y position based on mouse movement (for parallax)
+                targetX: 0,
+                targetY: 0,
+                // Properties for the floating animation
+                baseFloatOffsetY: 0, // Current offset for the floating effect
+                animationDelay: config.delay, // Delay before the float animation starts for this shape (in seconds)
+                floatAmplitude: config.amplitude, // How much the shape moves up and down (in pixels)
+                floatFrequency: config.frequency, // Speed of the floating movement
+                // Properties for the parallax effect (how shapes react to mouse)
+                parallaxSpeedFactor: config.parallaxSpeed, // Multiplier for mouse movement effect; higher is more responsive
+                // Storing initial CSS positions (top, left, right, bottom) to calculate base positions
+                // This is important if shapes are positioned with mixed 'right' or 'bottom' properties
+                initialTop: shapeElement.style.top,
+                initialLeft: shapeElement.style.left,
+                initialRight: shapeElement.style.right,
+                initialBottom: shapeElement.style.bottom,
+            };
+        });
+
+        // Event listener for mouse movement
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+
+            // Update target positions for each shape based on mouse position
+            shapeData.forEach(data => {
+                // Parallax effect: shapes move in opposite direction to mouse from center
+                // The calculation determines how much the shape should move based on mouse position relative to window center
+                const xOffset = (mouseX - window.innerWidth / 2) * data.parallaxSpeedFactor;
+                const yOffset = (mouseY - window.innerHeight / 2) * data.parallaxSpeedFactor;
+                
+                // Target positions are inverted for a common parallax style (move opposite to mouse)
+                data.targetX = -xOffset; 
+                data.targetY = -yOffset;
+            });
+        });
+        
+        // Variable to store the start time of the animation loop
+        let animationStartTime = null;
+
+        // The main animation function, called repeatedly by requestAnimationFrame
+        function animateShapes(timestamp) {
+            if (!animationStartTime) {
+                animationStartTime = timestamp; // Set start time on the first frame
+            }
+            // Calculate elapsed time in seconds since the animation started
+            const elapsedTimeInSeconds = (timestamp - animationStartTime) / 1000;
+
+            shapeData.forEach(data => {
+                // Smoothly interpolate current position towards target position (easing for parallax)
+                const easingFactor = 0.05; // Lower value = smoother/slower follow; Higher = quicker/snappier
+                data.currentX += (data.targetX - data.currentX) * easingFactor;
+                data.currentY += (data.targetY - data.currentY) * easingFactor;
+
+                // Calculate continuous floating movement using a sine wave
+                // 'elapsedTimeInSeconds + data.animationDelay' staggers the animation start for each shape
+                const timeForFloat = elapsedTimeInSeconds + data.animationDelay;
+                data.baseFloatOffsetY = Math.sin(timeForFloat * data.floatFrequency) * data.floatAmplitude;
+
+                // Combine the parallax translation and the float translation
+                // Parallax affects both X and Y, float only affects Y
+                const finalTranslateX = data.currentX;
+                const finalTranslateY = data.currentY + data.baseFloatOffsetY;
+
+                // Apply the combined transformation to the shape element
+                data.element.style.transform = `translate(${finalTranslateX}px, ${finalTranslateY}px)`;
+            });
+
+            // Request the next frame to continue the animation loop
+            requestAnimationFrame(animateShapes);
+        }
+
+        // Start the animation loop when the script loads
+        requestAnimationFrame(animateShapes);
+
+        // Optional: Recalculate on window resize to keep mouse centering accurate
+        window.addEventListener('resize', () => {
+            mouseX = window.innerWidth / 2;
+            mouseY = window.innerHeight / 2;
+            // Potentially re-initialize shape positions if they are percentage based
+            // and their pixel values need to be recalculated for JS logic.
+            // For this example, the transform is relative, so it might not be strictly necessary
+            // unless initial CSS positions are heavily relied upon for the JS base.
+        });
+
+    </script>
+</body>
+</html>
